@@ -13,17 +13,17 @@ gradf = @(x) f(x) .* (1-f(x));
 
 
 %data
-[xTrain, dTrain, xTest, dTest, imgTest] = Load('objectCategories/watch', 'objectCategories/Leopards', trainTestRatio);
+[xTrain, dTrain, xTest, dTest, imgTest] = Load('Motorbikes', 'Airplanes', trainTestRatio);
 
 [w,E] = OfflineLearning(xTrain, dTrain, f, gradf, lr, @Stop);
-
+%[w,E] = OnlineLearning(xTrain, dTrain, f, gradf, lr, @Stop);
 y = Predict(xTest, f, w);
 y = OutputToClass(y, max(dTest(:)));
 Draw(y, dTest, imgTest);
 
 % ----------------------------------------------------------------------------------------------------------------------------------
 function Draw(predicted, actual, X)
-c = ["watch", "leopard"];
+c = ["motorbikes", "airplanes"];
 close all;
 nrows = 6;
 ncols = 6;

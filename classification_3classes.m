@@ -10,6 +10,7 @@ gradf = @(x) f(x) .* (1-f(x));
 
 fprintf('learning from training data...\n');
 [w,E] = OfflineLearning(xTrain, dTrain, f, gradf, lr, @Stop);
+%[w,E] = OnlineLearning(xTrain, dTrain, f, gradf, lr, @Stop);
 fprintf('E: %.4f\n', E(end));
 
 fprintf('predicting test-data...\n');
