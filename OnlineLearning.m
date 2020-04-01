@@ -5,13 +5,14 @@ function [w,E] = OnlineLearning(x, d, f, gradf, lr, stop)
  while true
      E = 0;
      for i = randperm(N)
-     vi = x(i,:)*w;
-     yi = f(vi);
-    ei = yi-d(i,:); % using square loss function
-     gi = x(i,:)' * ei .* gradf(vi); %
-     w = w - lr * gi;
-     E = E + sum(ei.^2);
+         vi = x(i,:)*w;
+         yi = f(vi);
+         ei = yi-d(i,:); % using square loss function
+         gi = x(i,:)' * ei .* gradf(vi); %
+         w = w - lr * gi;
+         E = E + sum(ei.^2);
      end
      if stop(E, epoch), break; end
+     fprintf('%.4f\n', E(end));
      epoch = epoch + 1;
  end

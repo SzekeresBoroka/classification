@@ -14,6 +14,6 @@ while true
     if stopf(E, epoch)
         break;
     end
-    %fprintf('%.4f\n', E(end));
+    fprintf('%.4f\n', E(end));
     epoch = epoch + 1;
 end
