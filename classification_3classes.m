@@ -15,7 +15,8 @@ fprintf('E: %.4f\n', E(end));
 
 fprintf('predicting test-data...\n');
 y = Predict(xTest, f, w);
-y = OutputToClass(y, max(dTest(:)));
+%y = OutputToClass(y, max(dTest(:)));
+y = OutputToClass(y);
 Draw(y, dTest, imgTest);
 
 % ----------------------------------------------------------------------------------------------------------------------------------
@@ -28,11 +29,10 @@ nrows = 6;
 ncols = 6;
 % predicted = predicted + 1;
 % actual = actual + 1;
-predicted_index = predicted;
-% for i=1:length(predicted)
-%     %index of 1 from [1,0,0], [0,1,0], [0,0,1]
-%     predicted_index(i,1) = find(predicted(i,:)==1);
-% end
+for i=1:length(predicted)
+    %index of 1 from [1,0,0], [0,1,0], [0,0,1]
+    predicted_index(i,1) = find(predicted(i,:)==1);
+end
 for i=1:length(actual)
     %index of 1 from [1,0,0], [0,1,0], [0,0,1]
     actual_index(i,1) = find(actual(i,:)==1);
@@ -64,16 +64,36 @@ set(gcf(), 'MenuBar', 'none');
 set(gcf(), 'MenuBar', 'none');
 
 % ----------------------------------------------------------------------------------------------------------------------------------
-function c = OutputToClass(y, alpha)
-N = size(y, 1);
-c1 = repmat([1 0 0]*alpha, N, 1);
-c2 = repmat([0 1 0]*alpha, N, 1);
-c3 = repmat([0 0 1]*alpha, N, 1);
-d1 = vecnorm(c1-y, 2, 2);
-d2 = vecnorm(c2-y, 2, 2);
-d3 = vecnorm(c3-y, 2, 2);
+% function c = OutputToClass(y, alpha)
+% N = size(y, 1);
+% c1 = repmat([1 0 0]*alpha, N, 1);
+% c2 = repmat([0 1 0]*alpha, N, 1);
+% c3 = repmat([0 0 1]*alpha, N, 1);
+% d1 = vecnorm(c1-y, 2, 2);
+% d2 = vecnorm(c2-y, 2, 2);
+% d3 = vecnorm(c3-y, 2, 2);
+% 
+% [~, c] = min([d1 d2 d3], [], 2);
 
-[~, c] = min([d1 d2 d3], [], 2);
+function c = OutputToClass(y)
+N = size(y,1);
+for i=1:N
+    max = 0;
+    maxindex = 1;
+    for j=1:3
+        if y(i,j) > max
+            max = y(i,j);
+            maxindex = j;
+        end
+    end
+    for j=1:3
+        if j == maxindex
+            c(i,j) = 1;
+        else
+            c(i,j) = 0;
+        end
+    end
+end
 
 % ----------------------------------------------------------------------------------------------------------------------------------
 function [xTrain, dTrain, xTest, dTest, imgTest] = Load(folder1, folder2, folder3, trainTestRatio)
