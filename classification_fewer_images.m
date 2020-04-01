@@ -1,4 +1,4 @@
-function classification()
+function classification_fewer_images()
 trainTestRatio = 0.5;
 lr = 0.0005;
 
@@ -13,17 +13,17 @@ gradf = @(x) f(x) .* (1-f(x));
 
 
 %data
-[xTrain, dTrain, xTest, dTest, imgTest] = Load('Motorbikes', 'Airplanes', trainTestRatio);
+[xTrain, dTrain, xTest, dTest, imgTest] = Load('panda', 'garfield', trainTestRatio);
 
-%[w,E] = OfflineLearning(xTrain, dTrain, f, gradf, lr, @Stop);
-[w,E] = OnlineLearning(xTrain, dTrain, f, gradf, lr, @Stop);
+[w,E] = OfflineLearning(xTrain, dTrain, f, gradf, lr, @Stop);
+%[w,E] = OnlineLearning(xTrain, dTrain, f, gradf, lr, @Stop);
 y = Predict(xTest, f, w);
 y = OutputToClass(y, max(dTest(:)));
 Draw(y, dTest, imgTest);
 
 % ----------------------------------------------------------------------------------------------------------------------------------
 function Draw(predicted, actual, X)
-c = ["motorbikes", "airplanes"];
+c = ["panda", "garfield"];
 close all;
 nrows = 6;
 ncols = 6;

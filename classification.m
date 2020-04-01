@@ -6,7 +6,7 @@ f = @logsig;
 gradf = @(x) f(x) .* (1-f(x));
 
 %data
-[xTrain, dTrain, xTest, dTest, imgTest] = Load('panda', 'garfield', trainTestRatio);
+[xTrain, dTrain, xTest, dTest, imgTest] = Load('airplanes', 'motorbikes', trainTestRatio);
 
 [w,E] = OfflineLearning(xTrain, dTrain, f, gradf, lr, @Stop);
 %[w,E] = OnlineLearning(xTrain, dTrain, f, gradf, lr, @Stop);
@@ -16,7 +16,7 @@ Draw(y, dTest, imgTest);
 
 % ----------------------------------------------------------------------------------------------------------------------------------
 function Draw(predicted, actual, X)
-c = ["panda", "garfield"];
+c = ["airplane", "motorbike"];
 close all;
 nrows = 6;
 ncols = 6;
